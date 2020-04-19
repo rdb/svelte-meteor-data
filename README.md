@@ -24,16 +24,18 @@ Svelte to become aware of such changes.
 ### Reactive computations with `useTracker`
 
 The `useTracker()` function can be used to expose any reactive computation as a
-Svelte store.  You need only pass a callable, which will be run the first time
-it is used and then every time the computed value changes.  The changed value is
-automatically made available to Svelte.
+Svelte store.  You need only pass a callable returning a computed value, which
+will be run the first time it is used and then every time the computed value
+changes.  The updated value is automatically made available to Svelte.
 
-For example, this makes the current Meteor user available in a component, and
-causes Svelte to update the appropriate element automatically when the current
-user changes:
+For example, this example makes the current Meteor user available in a
+component, and causes Svelte to update the appropriate element automatically
+when the current user changes:
 
 ```svelte
 <script>
+  import { useTracker } from 'meteor/rdb:svelte-meteor-data';
+
   const currentUser = useTracker(() => Meteor.user());
 </script>
 
@@ -44,9 +46,11 @@ You can even mix Meteor reactivity with Svelte reactivity:
 
 ```svelte
 <script>
+  import { useTracker } from 'meteor/rdb:svelte-meteor-data';
+
   let selectedUserId;
 
-  $: selectedUser = useTracker(() => selectedUserId);
+  $: selectedUser = useTracker(() => Meteor.users.findOne(selectedUserId));
 </script>
 
 <p>Selected {$selectedUser.username}</p>
@@ -55,8 +59,8 @@ You can even mix Meteor reactivity with Svelte reactivity:
 ### Cursors
 
 While it's possible to use queries with `useTracker(() => query.fetch())`, this
-package supports a more convenient method, directly treating the cursor as a
-Svelte store:
+package supports a more convenient way to handle reactive queries, by allowing
+you to use a MongoDB cursor directly as a Svelte store:
 
 ```svelte
 <script>
@@ -89,12 +93,12 @@ As an added feature, you can use a subscription handle in an `{#await}` block:
 {/if}
 ```
 
-### `Tracker.autorun`
+### Tracker.autorun
 
-It is possible to use `Tracker.autorun()` to have code automatically be re-run
-when its Meteor dependencies change.  It will stop running when the component is
-destroyed.  This will work fine for top-level computations that do not depend on
-any dynamic Svelte state, such as this example:
+It is possible to use `Tracker.autorun()` with a function that is automatically
+re-run when its Meteor dependencies change.  It will stop being updated when the
+component is destroyed.  This will work fine for top-level computations that do
+not depend on any dynamic Svelte state, such as in this example:
 
 ```svelte
 <script>
