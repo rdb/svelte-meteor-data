@@ -130,3 +130,29 @@ and bound like any writable store using the `$` operator:
 
 <p>Value is {$store}</p>
 ```
+
+### Session variables
+
+If you are using Meteor [Session](https://docs.meteor.com/api/session.html)
+variables, these can be exposed as a reactive Svelte store using the
+`useSession` hook.  The first argument is the session key to expose, and the
+optional second argument allows you to set a default value for the session
+variable, as an added convenience.
+
+This function is only available if the `session` package has been added.
+
+```svelte
+<script>
+  import { useSession } from 'meteor/rdb:svelte-meteor-data';
+
+  const store = useSession('mySessionKey', 'initial');
+
+  // The above is equivalent to:
+  //Session.setDefault('mySessionKey', 'initial')
+  //const store = useSession('mySessionKey');
+</script>
+
+<input type="text" bind:value={$store} />
+
+<p>Value is {$store}</p>
+```
