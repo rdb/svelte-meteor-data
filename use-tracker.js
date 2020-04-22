@@ -5,8 +5,10 @@
 export default function useTracker(reactiveFn) {
   return {
     subscribe(set) {
-      const computation = Tracker.autorun(() => set(reactiveFn()));
-      return computation.stop.bind(computation);
+      return Tracker.nonreactive(() => {
+        const computation = Tracker.autorun(() => set(reactiveFn()));
+        return computation.stop.bind(computation);
+      });
     },
   };
 };
