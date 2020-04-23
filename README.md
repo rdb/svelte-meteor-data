@@ -110,9 +110,10 @@ not depend on any dynamic Svelte state, such as in this example:
 </script>
 ```
 
-However, it will not automatically detect changes to Svelte state, nor can I
-guarantee that it will work well with `$:`, so I highly recommend the use of
-`useTracker` instead.
+To make the autorun also respond to Svelte state changes, you need to put it
+under a `$:` block.  This will work, but with some caveats: if the Tracker state
+is invalidated right after a change to the Svelte state, all `$:` blocks will be
+re-run.  It is therefore better to use `useTracker` instead, as listed above.
 
 ### ReactiveVar
 
