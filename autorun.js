@@ -8,8 +8,10 @@ import { Tracker } from 'meteor/tracker';
 import { current_component, schedule_update, dirty_components } from 'svelte/internal';
 
 
-_autorun = Tracker.autorun;
-Tracker.autorun = function autorun(f, options) {
+const _autorun = Tracker.autorun;
+const _nonreactive = Tracker.nonreactive;
+
+function svelteAwareAutorun(f, options) {
   const component = current_component;
   const computation = _autorun.apply(this, arguments);
   if (component) {
@@ -18,6 +20,24 @@ Tracker.autorun = function autorun(f, options) {
     _autoStopComputation(computation, component);
   }
   return computation;
+}
+
+Tracker.autorun = svelteAwareAutorun;
+
+Tracker.nonreactive = function nonreactive(f) {
+  if (current_component) {
+    // A Tracker.autorun inside a Tracker.nonreactive should behave normally,
+    // without the special Svelte stuff.
+    const prevAutorun = Tracker.autorun;
+    Tracker.autorun = _autorun;
+    try {
+      return _nonreactive.apply(this, arguments);
+    } finally {
+      Tracker.autorun = prevAutorun;
+    }
+  } else {
+    return _nonreactive.apply(this, arguments);
+  }
 };
 
 function _autoStopComputation(computation, component) {
