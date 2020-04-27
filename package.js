@@ -1,6 +1,6 @@
 Package.describe({
   name: 'rdb:svelte-meteor-data',
-  version: '0.2.1',
+  version: '0.2.2',
   summary: 'Reactively track Meteor data inside Svelte components',
   git: 'https://github.com/rdb/svelte-meteor-data',
   documentation: 'README.md'
