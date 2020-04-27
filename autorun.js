@@ -48,6 +48,12 @@ function _autoStopComputation(computation, component) {
     return;
   }
 
+  if ($$.fragment && $$.dirty[0] === -1) {
+    // We have a fragment, but it's set to the initial dirty state, so we must
+    // be in on onMount or so.  Don't do anything special, then.
+    return;
+  }
+
   // We are in a reactive Svelte update.  That means that we'll need to stop the
   // computation the next time that it is run.  But we don't know when that is,
   // because the next update may or may not hit this autorun again, depending on
