@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.2.3
+- Implement hack to work around sveltejs/svelte#4899
+
 ## 0.2.2
 - Support `Tracker.autorun()` inside `onMount()`
 

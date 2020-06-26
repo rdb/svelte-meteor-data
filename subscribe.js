@@ -4,7 +4,17 @@
  * - Makes the return value usable in {#await} blocks
  */
 
-import { current_component } from 'svelte/internal';
+import { current_component, set_current_component, tick } from 'svelte/internal';
+
+
+const promise = tick();
+const oldThen = promise.then;
+promise.then = function (fn) {
+  oldThen.call(promise, () => {
+    fn();
+    set_current_component(null);
+  });
+};
 
 _subscribe = Meteor.subscribe;
 Meteor.subscribe = function subscribe(name) {
