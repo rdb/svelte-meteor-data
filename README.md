@@ -12,7 +12,7 @@ To add Svelte to your Meteor app, run:
 
 ```bash
 meteor add svelte:compiler rdb:svelte-meteor-data
-meteor npm install --save svelte@3.16.4
+meteor npm install --save svelte@3.27.0
 ```
 
 ## Usage
