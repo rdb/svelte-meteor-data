@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.3.1
+- Allow version 3.31.2 of Svelte dependency
+
 ## 0.3.0
 - Update Svelte dependency to at least 3.25.0, revert hack from 0.2.3
 
