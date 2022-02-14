@@ -10,7 +10,8 @@ Package.onUse(function(api) {
   api.versionsFrom('1.8');
   api.use('ecmascript');
   api.use('tracker');
-  api.use('svelte:compiler@3.31.2 || 3.25.0');
+  api.use('tmeasday:check-npm-versions@1.0.2');
+  api.use('svelte:compiler', {weak: true});
   api.use('reactive-var', {weak: true});
   api.use('session', 'client', {weak: true});
   api.use('mongo', {weak: true});
@@ -21,6 +22,7 @@ Package.onTest(function(api) {
   api.use('ecmascript');
   api.use('tinytest');
   api.use('rdb:svelte-meteor-data');
+  api.use('tmeasday:check-npm-versions@1.0.2');
   api.use('reactive-var');
   api.use('session', 'client');
   api.addFiles('reactive-var.tests.js');
