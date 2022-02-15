@@ -1,6 +1,6 @@
 Package.describe({
   name: 'rdb:svelte-meteor-data',
-  version: '0.3.1',
+  version: '1.0.0',
   summary: 'Reactively track Meteor data inside Svelte components',
   git: 'https://github.com/rdb/svelte-meteor-data',
   documentation: 'README.md'
@@ -11,7 +11,7 @@ Package.onUse(function(api) {
   api.use('ecmascript');
   api.use('tracker');
   api.use('tmeasday:check-npm-versions@1.0.2');
-  api.use('svelte:compiler', {weak: true});
+  api.use('svelte:compiler@3.31.2 || 3.25.0', {weak: true});
   api.use('reactive-var', {weak: true});
   api.use('session', 'client', {weak: true});
   api.use('mongo', {weak: true});

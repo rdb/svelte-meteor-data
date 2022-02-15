@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.0
+- Make `svelte:compiler` a weak dependency
+
 ## 0.3.1
 - Allow version 3.31.2 of Svelte dependency
 
