@@ -88,9 +88,9 @@ As an added feature, you can use a subscription handle in an `{#await}` block:
 ```svelte
 {#await Meteor.subscribe('todos')}
   <p>Loading todos…</p>
-{:else}
+{:then}
   <TodoList />
-{/if}
+{/await}
 ```
 
 ### Tracker.autorun
